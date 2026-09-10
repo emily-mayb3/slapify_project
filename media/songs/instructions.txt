@@ -1,1 +1,1 @@
-Insert audio files in the songs folder. Accepted file types can be found here: https://pypi.org/project/mutagen/
+Insert audio files in the songs folder. Program currently only accounts for mp3 files.
