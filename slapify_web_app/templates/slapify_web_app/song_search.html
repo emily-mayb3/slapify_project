@@ -84,52 +84,7 @@
     </table>
 {% endif %}
     <div class="progress-container">
-        <progress id="progress-bar" value="0" max="100"></progress>
+        <progress id="progress-bar" value="0" max="100" onclick="seekAudio(event)"></progress>
     </div>
     <br>
-    <script>
-        var currentAudioId = null;
-    
-        function playAudio(id) {
-            var audio = document.getElementById(id);
-            var progressBar = document.getElementById('progress-bar')
-            currentAudioId = id;
-    
-            if (audio.paused) {
-                audio.play();
-                updateProgressBar(audio, progressBar)
-            } else {
-                audio.pause();
-            }
-        }
-    
-        function updateProgressBar(audio, progressBar) {
-            var progress = (audio.currentTime / audio.duration * 100);
-            progressBar.value = progress;
-            
-            if (!audio.paused && progress < 100) {
-                setTimeout(function() {
-                    updateProgressBar(audio, progressBar);
-                }, 1000);
-            }
-        }
-    
-        document.getElementById('progress-bar').addEventListener('click', function(e) {
-            var audio = document.getElementById(currentAudioId);
-            console.log('Audio:', audio);
-            var progressBar = e.target;
-            console.log('ProgressBar:', progressBar);
-            var pos = (e.offsetX / progressBar.offsetWidth) * audio.duration;
-            console.log('Position:', pos);
-    
-            // Ensure audio is loaded
-            if (audio.readyState >= 2){
-                audio.currentTime = pos;
-            } else{
-                audio.addEventListener('loadeddata', function(){
-                    audio.currentTime = pos;
-                });
-            }
-        });
-    </script>
 {% endblock content %}
