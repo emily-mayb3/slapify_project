@@ -158,7 +158,6 @@ def send_song_to_playlist(request, song_pk, playlist_pk):
     playlist.songs.add(song)
     return redirect('song_search')
 
-
 def AdminView(request):
     return render(request, 'admin/admin.html')
 

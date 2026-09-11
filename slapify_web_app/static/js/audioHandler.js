@@ -1,20 +1,30 @@
 var currentAudioId = null;
+let queue = []; // queue will just hold ids of songs
 
-function playAudio(id) {
-    // destroy previous song being played
-    if (currentAudioId != null && currentAudioId != id) {
-        document.getElementById(currentAudioId).pause();
-        document.getElementById(currentAudioId).currentTime = 0;
+// source = 0 -> single song, source = 1 -> queue
+function playAudio(source = 0, id) {
+    console.log("playAudio called with source: " + source + " and id: " + id);
+    // destroy previous song being played if playing single song
+    if (currentAudioId != id && source == 0) {
+        if (currentAudioId != null) {
+            document.getElementById(currentAudioId).pause();
+            document.getElementById(currentAudioId).currentTime = 0;
+        }
+        clearQueue();
+        queue.push(id);
     }
 
-    var audio = document.getElementById(id);
+    // play next song in queue
+    var audio = document.getElementById(queue[0]);
     var progressBar = document.getElementById('progress-bar')
-    currentAudioId = id;
+    currentAudioId = queue[0];
 
     if (audio.paused) {
+        console.log("Playing song: " + queue[0]);
         audio.play();
         updateProgressBar(audio, progressBar)
     } else {
+        console.log("Paused song: " + queue[0]);
         audio.pause();
     }
 }
@@ -33,11 +43,8 @@ function updateProgressBar(audio, progressBar) {
 // Add event listener to the progress bar for seeking
 function seekAudio(e) {
     var audio = document.getElementById(currentAudioId);
-    console.log('Audio:', audio);
     var progressBar = e.target;
-    console.log('ProgressBar:', progressBar);
     var pos = (e.offsetX / progressBar.offsetWidth) * audio.duration;
-    console.log('Position:', pos);
 
     // Ensure audio is loaded
     if (audio.readyState >= 2) {
@@ -47,4 +54,27 @@ function seekAudio(e) {
             audio.currentTime = pos;
         });
     }
+}
+
+function addSongToQueue(id) {
+    // Add the song to the queue if it's not already in it
+    if (!queue.includes(id)) {
+        queue.push(id);
+    }
+    // play song if no song is currently playing
+    if (currentAudioId == null) {
+        playAudio(1, id);
+    }
+}
+
+function removeSongFromQueue(id) {
+    // Remove the song from the queue if it's in it
+    if (queue.includes(id)) {
+        var index = queue.indexOf(id);
+        queue.splice(index, 1);
+    }
+}
+
+function clearQueue() {
+    queue = [];
 }

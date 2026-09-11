@@ -22,7 +22,7 @@
             <td class="playlist_table_cell">{{song.formatted_duration}}</td>
             <td>
                 <audio id="audio-{{ song.pk }}" src="{{ song.song_file.url }}" type="audio/mp3" preload="auto"></audio>
-                <button class="submit_button" onclick="playAudio('audio-{{ song.pk }}')">Play/Pause</button>
+                <button class="submit_button" onclick="playAudio(0, 'audio-{{ song.pk }}')">Play/Pause</button>
             </td>
             <td>
                 <a href="{% url 'remove_song' playlist.pk song.pk %}">
