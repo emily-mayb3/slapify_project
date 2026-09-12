@@ -143,16 +143,22 @@ pre {
 }
 
 .playlist_table_row {
+    display: grid;
+    grid-template-columns: repeat(7, 10fr);
     border-bottom: 1px solid;
 }
 
 .playlist_table_head {
-    text-align: right;
+    display: grid;
+    justify-content: flex-start;
+    align-items: center;
     padding: 10px;
 }
 
 .playlist_table_cell {
-    text-align: right;
+    display: grid;
+    justify-content: flex-start;
+    align-items: center;
     padding: 10px;
 }
 
@@ -327,9 +333,11 @@ input[type="file"] {
 .user_playlists_table {
     width: 90%;
 }
+
 .user_playlists_table_row {
     border-bottom: 1px solid;
 }
+
 .user_playlists_table_cell {
     text-align: center;
     padding: 10px;
@@ -340,7 +348,7 @@ input[type="file"] {
     cursor: pointer;
 }
 
-.search_bar{
+.search_bar {
     width: 600px !important;
     background-color: #4CAF50;
     border-color: black;
@@ -348,7 +356,7 @@ input[type="file"] {
     padding: 8px;
 }
 
-.search_bar::placeholder{
+.search_bar::placeholder {
     color: black;
 }
 

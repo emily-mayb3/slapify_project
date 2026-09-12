@@ -30,6 +30,7 @@
             <th class="playlist_table_head">Duration</th>
             <th class="playlist_table_head">Add to Playlist</th>
             <th class="playlist_table_head"></th>
+            <th class="playlist_table_head"></th>
         </tr>
         {% for song in songs %}
             <tr class="playlist_table_row">
@@ -37,14 +38,17 @@
                 <td class="playlist_table_cell">{{song.artist}}</td>
                 <td class="playlist_table_cell">{{ song.genre }}</td>
                 <td class="playlist_table_cell">{{song.formatted_duration}}</td>
-                <td>
+                <td class="playlist_table_cell">
                     <a href="{% url 'add_to_playlist' song.pk %}">
                         <button id="remove_song_button" class="submit_button">Add</button>
                     </a>
                 </td>
-                <td>
+                <td class="playlist_table_cell">
                     <audio id="audio-{{ song.pk }}" src="{{ song.song_file.url }}" type="audio/mp3" preload="auto"></audio>
                     <button class="submit_button" onclick="playAudio(0, 'audio-{{ song.pk }}')">Play/Pause</button>
+                </td>
+                <td class="playlist_table_cell">
+                    <button class="submit_button" onclick="addSongToQueue('audio-{{ song.pk }}')">Add to queue</button>
                 </td>
             </tr>
         {% endfor %}
@@ -63,6 +67,7 @@
             <th class="playlist_table_head">Duration</th>
             <th class="playlist_table_head">Add to Playlist</th>
             <th class="playlist_table_head"></th>
+            <th class="playlist_table_head"></th>
         </tr>
         {% for song in songs %}
             <tr class="playlist_table_row">
@@ -70,14 +75,17 @@
                 <td class="playlist_table_cell">{{song.artist}}</td>
                 <td class="playlist_table_cell">{{ song.genre }}</td>
                 <td class="playlist_table_cell">{{song.formatted_duration}}</td>
-                <td>
+                <td class="playlist_table_cell">
                     <a href="{% url 'add_to_playlist' song.pk %}">
-                        <button id="remove_song_button" class="submit_button">Add</button>
+                        <button id="add_song_button" class="submit_button">Add</button>
                     </a>
                 </td>
-                <td>
+                <td class="playlist_table_cell">
                     <audio id="audio-{{ song.pk }}" src="{{ song.song_file.url }}" type="audio/mp3" preload="auto"></audio>
-                    <button class="submit_button" onclick="playAudio('audio-{{ song.pk }}')">Play/Pause</button>
+                    <button class="submit_button" onclick="playAudio(0, 'audio-{{ song.pk }}')">Play/Pause</button>
+                </td>
+                <td class="playlist_table_cell">
+                    <button class="submit_button" onclick="addSongToQueue('audio-{{ song.pk }}')">Add to queue</button>
                 </td>
             </tr>
         {% endfor %}

@@ -20,14 +20,17 @@
             <td class="playlist_table_cell">{{song.artist}}</td>
             <td class="playlist_table_cell">{{ song.genre }}</td>
             <td class="playlist_table_cell">{{song.formatted_duration}}</td>
-            <td>
+            <td class="playlist_table_cell">
                 <audio id="audio-{{ song.pk }}" src="{{ song.song_file.url }}" type="audio/mp3" preload="auto"></audio>
                 <button class="submit_button" onclick="playAudio(0, 'audio-{{ song.pk }}')">Play/Pause</button>
             </td>
-            <td>
+            <td class="playlist_table_cell">
                 <a href="{% url 'remove_song' playlist.pk song.pk %}">
                     <button id="remove_song_button" class="submit_button">Remove</button>
                 </a>
+            </td>
+            <td class="playlist_table_cell">
+                <button class="submit_button" onclick="addSongToQueue('audio-{{ song.pk }}')">Add to queue</button>
             </td>
         </tr>
     {% endfor %}

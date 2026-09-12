@@ -3,14 +3,13 @@ let queue = []; // queue will just hold ids of songs
 
 // source = 0 -> single song, source = 1 -> queue
 function playAudio(source = 0, id) {
-    console.log("playAudio called with source: " + source + " and id: " + id);
     // destroy previous song being played if playing single song
     if (currentAudioId != id && source == 0) {
         if (currentAudioId != null) {
             document.getElementById(currentAudioId).pause();
             document.getElementById(currentAudioId).currentTime = 0;
+            clearQueue();
         }
-        clearQueue();
         queue.push(id);
     }
 
@@ -20,11 +19,9 @@ function playAudio(source = 0, id) {
     currentAudioId = queue[0];
 
     if (audio.paused) {
-        console.log("Playing song: " + queue[0]);
         audio.play();
         updateProgressBar(audio, progressBar)
     } else {
-        console.log("Paused song: " + queue[0]);
         audio.pause();
     }
 }
@@ -32,11 +29,21 @@ function playAudio(source = 0, id) {
 function updateProgressBar(audio, progressBar) {
     var progress = (audio.currentTime / audio.duration * 100);
     progressBar.value = progress;
+    if (progress == 100) {
+        clearTimeout(this.timeoutId);
+        progress = 0;
+        removeSongFromQueue(queue[0]);
+        if (queue.length > 0) {
+            playAudio(1, queue[0]);
+        } else {
+            currentAudioId = null;
+        }
+    }
 
     if (!audio.paused && progress < 100) {
-        setTimeout(function () {
+        this.timeoutId = setTimeout(function () {
             updateProgressBar(audio, progressBar);
-        }, 1000);
+        }, 100);
     }
 }
 
